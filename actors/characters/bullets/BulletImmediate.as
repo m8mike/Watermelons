@@ -1,0 +1,15 @@
+package {
+	import Box2D.Common.Math.b2Vec2;
+	
+	/**
+	 * ...
+	 * @author ...
+	 */
+	public class BulletImmediate extends Bullet {
+		
+		public function BulletImmediate(x:Number, y:Number, impulse:b2Vec2, size:int = 7) {
+			const timeToBlow:int = 0;
+			super(x, y, impulse, timeToBlow, size);
+		}
+	}
+}
