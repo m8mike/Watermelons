@@ -3,6 +3,7 @@ package {
 	import fl.motion.Color;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	
 	/**
 	* игра про арбуз
@@ -14,15 +15,18 @@ package {
 	public class Platformer extends MovieClip {
 		public static var instance:Platformer;
 		public static var player:Player;
+		public static var locToSpawn:Point;
 		
 		public function Platformer() {
+			locToSpawn = new Point(5, -5);
 			instance = this;
 			CameraManager.init();
 			PhysicalWorld.setupPhysicsWorld();
 			PhysicalWorld.setupDebugDraw();
 			new LevelDirector();
 			instance.addEventListener(Event.ENTER_FRAME, gameCycle);
-			player = new Player(5, -5);
+			player = new Player(locToSpawn.x, locToSpawn.y);
+			new JetpackBonus(locToSpawn.x, locToSpawn.y);
 			new Controls();
 		}
 		

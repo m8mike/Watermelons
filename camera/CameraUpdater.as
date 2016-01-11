@@ -14,10 +14,15 @@ package {
 		public static function getCameraSection():Point {
 			if (Platformer.player) {
 				return getOnePlayerSection();
-			} else return CameraManager.freePoint;
+			} else {
+				return CameraManager.freePoint;
+			}
 		}
 		
 		public static function getOnePlayerSection():Point {
+			if (Platformer.player.getBody() == null) {
+				return Platformer.player.getSpriteLoc();
+			}
 			var spriteLoc:Point = Platformer.player.getSpriteLoc();
 			var goldenSection:Point;
 			var goldenY:Number = spriteLoc.y - 18.144;

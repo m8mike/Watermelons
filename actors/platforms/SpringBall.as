@@ -38,5 +38,9 @@ package {
 			body = bodyBuilder.getBody(new Array(shape));
 			body.SetUserData(this);
 		}
+		
+		override public function hide():void {
+			//чтобы не удалялось при отдалении
+		}
 	}
 }

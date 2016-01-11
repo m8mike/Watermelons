@@ -13,6 +13,7 @@ package {
 		//private var costumeManager:PlayerCostumeManager;
 		
 		public var currentItem:Item;
+		public var vehicle:Vehicle;
 		
 		public function Player(x:int, y:int) {
 			condition = new Condition();
@@ -29,9 +30,15 @@ package {
 		}
 		
 		override public function getSpriteLoc():Point {
-			var worldCenter:b2Vec2 = getBody().GetWorldCenter().Copy();
-			return new Point(worldCenter.x * PhysicalWorld.RATIO,
-							 worldCenter.y * PhysicalWorld.RATIO);
+			if (vehicle) {
+				return vehicle.getLoc();
+			}
+			if (getBody()) {
+				var worldCenter:b2Vec2 = getBody().GetWorldCenter().Copy();
+				return new Point(worldCenter.x * PhysicalWorld.RATIO,
+								 worldCenter.y * PhysicalWorld.RATIO);
+			}
+			return null;
 		}
 		
 		public function clearJumps():void {

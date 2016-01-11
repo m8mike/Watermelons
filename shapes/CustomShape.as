@@ -16,6 +16,12 @@ package {
 			_coords = coords;
 		}
 		
+		public function add(num:Number):void {
+			for each (var newPoint:Point in _coords) {
+				newPoint.y += num;
+			}
+		}
+		
 		override public function getShapeDef():b2ShapeDef {
 			shapeDef = new b2PolygonDef();
 			b2PolygonDef(shapeDef).vertexCount = _coords.length;

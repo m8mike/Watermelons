@@ -27,7 +27,7 @@ package {
 		public static var allowed:Boolean = false;
 		
 		public function Controls() {
-			if (!Platformer.instance.stage.hasEventListener(KeyboardEvent.KEY_DOWN)) {	
+			if (!Platformer.instance.stage.hasEventListener(KeyboardEvent.KEY_DOWN)) {
 				Platformer.instance.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
 				Platformer.instance.stage.addEventListener(KeyboardEvent.KEY_UP, keyUp);
 				allowed = true;
@@ -137,7 +137,7 @@ package {
 					break;
 				case Keyboard.SPACE:
 					up = false;
-						if (Platformer.player) {	
+						if (Platformer.player) {
 							Platformer.player.clearJumps();
 						}
 					break;

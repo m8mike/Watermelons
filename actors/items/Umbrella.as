@@ -16,6 +16,7 @@ package {
 		override public function update():void {
 			var condition:Condition = player.condition;
 			var body:b2Body = player.getBody();
+			if (!body) return void;
 			var canJump:Boolean = condition.canJump;
 			if (Controls.useItem && !canJump) {
 				body.m_linearDamping = 3;

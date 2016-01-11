@@ -1,6 +1,7 @@
 package 
 {
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.b2Body;
 	import flash.geom.Point;
 	/**
 	 * ...
@@ -15,6 +16,10 @@ package
 			setAngle(angle);
 			loc1.x *= PhysicalWorld.MIN_SQARE;
 			loc1.y *= PhysicalWorld.MIN_SQARE;
+		}
+		
+		override protected function init(myBody:b2Body):void {
+			super.init(myBody);
 			move = new MoveABX(location, loc1, body, 0.1, angle);
 			rotate = new RotateX(1, body, angle);
 		}

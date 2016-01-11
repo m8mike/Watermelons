@@ -20,14 +20,17 @@ package {
 		public var jumpTimeLeft:int = 0;
 		public var impulseReducer:int = 0;
 		
-		public static const JUMP_IMPULSE:b2Vec2 = new b2Vec2(0.0, -0.3);
-		public static const JUMP_FORCE:b2Vec2 = new b2Vec2(0.0, -3.0);
-		public static const LEFT_WALL_IMPULSE:b2Vec2 = new b2Vec2(-0.5 / 1.5, -0.6 / 1.5);
-		public static const RIGHT_WALL_IMPULSE:b2Vec2 = new b2Vec2(0.5 / 1.5, -0.6 / 1.5);
+		private var JUMP_IMPULSE:b2Vec2 = new b2Vec2(0.0, -0.3);
+		private static const JUMP_FORCE:b2Vec2 = new b2Vec2(0.0, -3.0);
+		private static const LEFT_WALL_IMPULSE:b2Vec2 = new b2Vec2(-0.5 / 1.5, -0.6 / 1.5);
+		private static const RIGHT_WALL_IMPULSE:b2Vec2 = new b2Vec2(0.5 / 1.5, -0.6 / 1.5);
 		
-		public function Jump(condition:Condition, body:b2Body) {
+		public function Jump(condition:Condition, body:b2Body, impulse:b2Vec2 = null) {
 			this.condition = condition;
 			super(body);
+			if (impulse != null) {
+				JUMP_IMPULSE = impulse;
+			}
 		}
 		
 		public function stopJumping():void {

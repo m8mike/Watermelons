@@ -1,4 +1,5 @@
 package {
+	import Box2D.Dynamics.b2Body;
 	import flash.geom.Point;
 	
 	/**
@@ -7,12 +8,18 @@ package {
 	 */
 	public class Funicular extends Vehicle {
 		private var move:MoveAB;
+		private var location1:Point;
 		
 		public function Funicular(x:Number, y:Number, loc1:Point) {
 			super(x, y, 4, 3);
-			loc1.x *= PhysicalWorld.MIN_SQARE;
-			loc1.y *= PhysicalWorld.MIN_SQARE;
-			move = new MoveAB(location, loc1, body);
+			location1 = loc1.clone();
+			location1.x *= PhysicalWorld.MIN_SQARE;
+			location1.y *= PhysicalWorld.MIN_SQARE;
+		}
+		
+		override protected function init(myBody:b2Body):void {
+			move = new MoveAB(location, location1, body);
+			super.init(myBody);
 		}
 		
 		override public function update():void {

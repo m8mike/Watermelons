@@ -9,15 +9,15 @@ package {
 	* @author Mad Mike
 	*/
 	public class CircleShape extends MyShape {
-		public var _radius;
+		public var radius;
 		
 		public function CircleShape(radius:Number) {
-			_radius = radius / PhysicalWorld.RATIO;
+			this.radius = radius / PhysicalWorld.RATIO;
 		}
 		
 		override public function getShapeDef():b2ShapeDef {
 			shapeDef = new b2CircleDef();
-			b2CircleDef(shapeDef).radius = _radius;
+			b2CircleDef(shapeDef).radius = radius;
 			return shapeDef;
 		}
 		
@@ -26,7 +26,7 @@ package {
 			var color:uint = Math.random() * 0x1000000;
 			sprite.graphics.lineStyle(2, color);
 			sprite.graphics.beginFill(color + Math.random() * 0x1000);
-			sprite.graphics.drawCircle(0, 0, _radius * PhysicalWorld.RATIO);
+			sprite.graphics.drawCircle(0, 0, radius * PhysicalWorld.RATIO);
 			sprite.graphics.endFill();
 			return sprite;
 		}

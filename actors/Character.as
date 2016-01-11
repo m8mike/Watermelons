@@ -19,6 +19,9 @@ package {
 		}
 		
 		public function getBody():b2Body {
+			if (bodyManager.removed) {
+				return null;
+			}
 			return bodyManager.body;
 		}
 		

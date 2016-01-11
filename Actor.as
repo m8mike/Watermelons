@@ -11,7 +11,7 @@ package {
 		public var location:Point;
 		
 		public function Actor(loc:Point) {
-			location = loc;
+			location = loc.clone();
 		}
 		
 		public function update():void {}
@@ -34,7 +34,7 @@ package {
 		protected function removeCostumes():void {}
 		
 		public function getSpriteLoc():Point {
-			return null;
+			return location.clone();
 		}
 		
 		public function getXML():XML {

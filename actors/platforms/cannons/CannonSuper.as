@@ -6,7 +6,7 @@ package {
 	 * @author ...
 	 */
 	public class CannonSuper extends Platform {
-		private var shape2:CircleShape;
+		protected var shape2:CircleShape;
 		private var shootTimer:int = 0;
 		
 		public function CannonSuper(x:Number, y:Number) {

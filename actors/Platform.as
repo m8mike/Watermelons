@@ -13,6 +13,7 @@ package {
 		public var bodyBuilder:BodyBuilder;
 		public var width:Number;
 		public var height:Number;
+		protected var currentAngle:Number = 0;
 		
 		public function Platform(x:Number, y:Number, w:Number = 1, h:Number = 1) {
 			var loc:Point = new Point(x * PhysicalWorld.MIN_SQARE, y * PhysicalWorld.MIN_SQARE);
@@ -20,22 +21,28 @@ package {
 			height = h;
 			super(loc);
 			createShapes();
-			createBodies();
-			init(body);
+			Updatables.addPlatform(this);
+			/*createBodies();
+			init(body);*/
 		}
 		
 		protected function init(myBody:b2Body):void {
-			Updatables.addPlatform(this);
 			body = myBody;
 			body.SetUserData(this);
+			setAngle(currentAngle);
 		}
 		
 		public function setAngle(angle:Number):void {
-			body.SetXForm(body.GetPosition(), angle / 180 * Math.PI);
+			if (body) {	
+				currentAngle = angle;
+				body.SetXForm(body.GetPosition(), currentAngle / 180 * Math.PI);
+			}
 		}
 		
 		public function setLoc(loc:b2Vec2):void {
-			body.SetXForm(loc, body.GetAngle());
+			if (body) {	
+				body.SetXForm(loc, body.GetAngle());
+			}
 		}
 		
 		override public function hide():void {
@@ -45,9 +52,9 @@ package {
 		}
 		
 		public function show():void {
-			if (!body) {	
-				createShapes();
+			if (!body) {
 				createBodies();
+				init(body);
 			}
 		}
 		
@@ -76,6 +83,7 @@ package {
 		
 		override protected function removeBodies():void {
 			PhysicalWorld.safeRemoveBody(body);
+			body = null;
 			super.removeBodies();
 		}
 	}

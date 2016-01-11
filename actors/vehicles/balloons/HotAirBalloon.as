@@ -13,7 +13,11 @@ package {
 		
 		public function HotAirBalloon(x:Number, y:Number) {
 			super(x, y);
-			control = new FlyControl(body);
+		}
+		
+		override protected function init(myBody:b2Body):void {
+			control = new FlyControl(myBody);
+			super.init(myBody);
 		}
 		
 		override public function update():void {

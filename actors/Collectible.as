@@ -11,11 +11,17 @@ package {
 	public class Collectible extends Actor {
 		protected var body:b2Body;
 		protected var shape:CircleShape;
+		protected var deleted:Boolean = false;
 		
 		public function Collectible(loc:Point) {
 			Updatables.addCollectible(this);
 			super(loc);
-			createBodies();
+		}
+		
+		override public function update():void {
+			if (!body && !deleted) {	
+				createBodies();
+			}
 		}
 		
 		public function createBodies():void {
@@ -38,6 +44,7 @@ package {
 		override protected function cleanUpBeforeRemoving():void {
 			Updatables.removeCollectible(this);
 			PhysicalWorld.safeRemoveBody(body);
+			deleted = true;
 			super.cleanUpBeforeRemoving();
 		}
 	}

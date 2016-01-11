@@ -1,28 +1,35 @@
 package {
+	import Box2D.Common.Math.b2Vec2;
 	import flash.geom.Point;
 	
 	public class LevelDirector {
 		
 		public function LevelDirector() {
 			SoundMusic.setSoundVolume(1);
-			new Standard(0, 0, 35, 2);
-			//new CannonLazyFixedRotation(10, -5);
+			new Particle(2, -10);
+			new CannonFly(10, -10);
+			/*new Boost( -15, -3, 3, 3, new b2Vec2( -10, 0));
+			new Boost( -20, -3, 3, 3, new b2Vec2( -10*Math.cos(Math.PI/4), -10*Math.sin(Math.PI/4)));
+			new Boost( -25, -3, 3, 3, new b2Vec2(0, -1));
+			new Boost( -30, -3, 3, 3, new b2Vec2(10*Math.cos(Math.PI/4), -10*Math.sin(Math.PI/4)));
+			new Boost( -35, -3, 3, 3, new b2Vec2(10, 0));*/
+			/*//new CannonLazyFixedRotation(10, -5);
 			///new CannonLazy(15, -5);
-			/*new Cannon(20, -5);
+			new Cannon(20, -5);
 			new CannonFixed(25, -5);
 			new CannonFixedRotation(30, -5);
-			new CannonMoving(30, -15, new Point(50, -15), -90);*/
+			new CannonMoving(30, -15, new Point(50, -15), -90);
 			//new CannonFixed(10, -5);
 			//new CannonCircleMoving(10, -5, 3, 0);
-			/*new CannonFollowing(10, -5, new Point(20, -5));
+			new CannonFollowing(10, -5, new Point(20, -5));
 			new CannonFollowing(35, -10, new Point(35, -5));
 			new CannonFollowing(0, 0, new Point(100, -100));
-			new CannonFollowing(20, -10, new Point(30, -5));*/
+			new CannonFollowing(20, -10, new Point(30, -5));
 			//new CannonMovingFollowing(10, -5, new Point(30, -5));
 			//new CannonRotating(10, -5, 90, -2);
 			//new CannonMovingRotating(13, -3, new Point(18, -3), -90);
 			//new CannonMoving(13, -3, new Point(18, -3), -90);
-			//new StandardMoving(20, -3, new Point(20, -7), 3, 1);
+			new StandardMoving(20, -3, new Point(20, -7), 3, 1);*/
 			//new BombingBat(10, -6);
 			//new Polyp(10, -1);
 			//new SpringBush(14, -1);
@@ -59,12 +66,57 @@ package {
 			for (var i:int = 0; i < 500; i++) {
 				new StickyHexagon(10+(2*i+8)*Math.sqrt(3), -4, 2);
 			}*/
-			//new ControlCabin(new CannonRotating(10, -4, 90, 2), 10, -1);
-			//addBoxWalls();
-			//new HotAirBalloon(10, -6);
-			//new Car(10, -6);
-			//new Funicular(10, -10, new Point(20, -12));
-			new DynamicTerrain(0, 0);
+			/*new ControlCabin(new CannonRotating(10, -4, 90, 2), 10, -1);
+			addBoxWalls();
+			new Funicular(10, -10, new Point(20, -12));*/
+			//new HotAirBalloon(0, -10);
+			//new Train();
+			//new Blob(0, 3, new Car(10, -6));
+			//new CarBuilder(10, -6);
+			//new HotAirBalloon(10, -3);
+			new Tank(10, -3);
+			new Crate(12, -6);
+			new Crate(12, -5);
+			new Crate(12, -7);
+			new Crate(12, -8);
+			new Crate(13, -6);
+			new Crate(13, -5);
+			new Crate(13, -7);
+			new Crate(13, -8);
+			new Crate(14, -6, true);
+			new Crate(14, -8, true);
+			new Crate(14, -10, true);
+			new Crate(14, -12, true);
+			new Crate(16, -6, true);
+			new Crate(16, -8, true);
+			new Crate(16, -10, true);
+			new Crate(16, -12, true);
+			//new Tank2(10, -3);
+			//new Car3(10, -3);
+			//new Car2(10, -3);
+			//new Car1(10, -3);
+			//new Car4(10, -3);
+			/*Updatables.addCharacter(new FerrisWheel(0, -10, 2));
+			new SpringBall(100, -10);
+			new GravityCircle(100, -10, 20);*/
+			var nextHeight:Number =  140 + Math.random() * 200;
+			var terrain:DynamicTerrain;
+			for (var j:int = -3; j < 3; j++) {
+				terrain = new DynamicTerrain(j * 640 / 20, 0, nextHeight);
+				nextHeight = terrain.nextHill;
+				//new Boost(j * 640 / 20, nextHeight / 20 - 3);
+			}
+			for (var i:int = 3; i < 5; i++) {
+				terrain = new DynamicUphill(i * 640 / 20, 0, nextHeight);
+				nextHeight = terrain.nextHill;
+			}
+			terrain = new DynamicTerrain(5 * 640 / 20, 0, nextHeight);
+			nextHeight = terrain.nextHill;
+			for (i = 6; i < 500; i++) {
+				terrain = new DynamicDownhill(i * 640 / 20, 0, nextHeight);
+				nextHeight = terrain.nextHill;
+			}
+			//new RandomMap();
 		}
 		
 		private function addBoxWalls():void {

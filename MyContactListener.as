@@ -1,5 +1,6 @@
 package {
 	import Box2D.Collision.b2ContactPoint;
+	import Box2D.Collision.Shapes.b2PolygonShape;
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2ContactListener;
 	
@@ -46,6 +47,12 @@ package {
 				SpringBall(platform).hit(player.getBody());
 			} else if (platform is SpringBush) {
 				SpringBush(platform).hit(player.getBody());
+				return void;
+			} else if (platform is Crate) {
+				if (point.normal.y < -0.7) {
+					Crate(platform).hit();
+					player.jumpOnHead();
+				}
 				return void;
 			}
 			if (!condition.canJump) {
@@ -95,7 +102,45 @@ package {
 		private function addAndPersist(point:b2ContactPoint):void {
 			var actor1:Actor = point.shape1.GetBody().GetUserData();
 			var actor2:Actor = point.shape2.GetBody().GetUserData();
-			if (actor1 is Vehicle || actor2 is Vehicle) {
+			var condition:Condition;
+			if (actor1 is Vehicle) {
+				if (actor2 is Boost) {
+					if (point.shape1 is b2PolygonShape) {
+						Boost(actor2).hit(Vehicle(actor1));
+					}
+					return void;
+				}
+				if (actor2 is Platform && point.normal.y < -0.7) {
+					condition = Vehicle(actor1).condition;
+					if (!condition.canJump) {
+						condition.allowJumps(point.normal.x, point.normal.y);
+					}
+				}
+				return void;
+			} else if (actor2 is Vehicle) {
+				if (actor1 is Boost) {
+					if (point.shape2 is b2PolygonShape) {
+						Boost(actor1).hit(Vehicle(actor2));
+					}
+					return void;
+				}
+				if (actor1 is Platform && point.normal.y < -0.7) {
+					condition = Vehicle(actor2).condition;
+					if (!condition.canJump) {
+						condition.allowJumps(point.normal.x, point.normal.y);
+					}
+				}
+				return void;
+			}
+			if (actor1 is GravityCircle) {
+				if (!point.shape2.GetBody().IsStatic()) {
+					GravityCircle(actor1).hit(point.shape2.GetBody());
+				}
+				return void;
+			} else if (actor2 is GravityCircle) {
+				if (!point.shape1.GetBody().IsStatic()) {
+					GravityCircle(actor2).hit(point.shape1.GetBody());
+				}
 				return void;
 			}
 			if (actor1 is Bullet) {
@@ -118,7 +163,15 @@ package {
 				characterHitsPlatform(Character(actor1), Platform(actor2), point);
 			} else if (actor2 is Character && actor1 is Platform) {
 				characterHitsPlatform(Character(actor2), Platform(actor1), point);
+			} else if (actor1 is Collectible && actor2 is Platform) {
+				collectibleHitsPlatform(Collectible(actor1), Platform(actor2), point);
+			} else if (actor2 is Collectible && actor1 is Platform) {
+				collectibleHitsPlatform(Collectible(actor2), Platform(actor1), point);
 			}
+		}
+		
+		private function collectibleHitsPlatform(collectible:Collectible, platform:Platform, point:b2ContactPoint):void {
+			collectible.destroy();
 		}
 		
 		override public function Persist(point:b2ContactPoint):void {
@@ -138,6 +191,25 @@ package {
 		override public function Remove(point:b2ContactPoint):void {
 			var actor1:Actor = point.shape1.GetBody().GetUserData();
 			var actor2:Actor = point.shape2.GetBody().GetUserData();
+			if (actor1 is Vehicle) {
+				if (actor2 is Boost) {
+					Boost(actor2).activated = false;
+					return void;
+				}
+				if (actor2 is Platform) {
+					Vehicle(actor1).condition.disallowJumps();
+				}
+				return void;
+			} else if (actor2 is Vehicle) {
+				if (actor1 is Boost) {
+					Boost(actor1).activated = false;
+					return void;
+				}
+				if (actor1 is Platform) {
+					Vehicle(actor2).condition.disallowJumps();
+				}
+				return void;
+			}
 			if (actor1 is Character && actor2 is Platform) {
 				playerRemovePlatform(Character(actor1), Platform(actor2), point);
 			} else if (actor2 is Character && actor1 is Platform) {

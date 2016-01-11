@@ -1,4 +1,5 @@
 package {
+	import Box2D.Dynamics.b2Body;
 	import flash.geom.Point;
 	
 	/**
@@ -8,13 +9,19 @@ package {
 	public class StandardMoving extends Platform {
 		private var move:MoveAB;
 		private var rotate:Boolean;
+		private var location1:Point;
 		
 		public function StandardMoving(x:Number, y:Number, loc1:Point, w:Number = 1, h:Number = 1, rotate = false) {
 			super(x, y, w, h);
-			loc1.x *= PhysicalWorld.MIN_SQARE;
-			loc1.y *= PhysicalWorld.MIN_SQARE;
-			move = new MoveAB(location, loc1, body);
+			location1 = loc1.clone();
+			location1.x *= PhysicalWorld.MIN_SQARE;
+			location1.y *= PhysicalWorld.MIN_SQARE;
 			this.rotate = rotate;
+		}
+		
+		override protected function init(myBody:b2Body):void {
+			super.init(myBody);
+			move = new MoveAB(location, location1, body);
 		}
 		
 		override public function update():void {

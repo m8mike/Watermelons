@@ -1,4 +1,5 @@
 package {
+	import Box2D.Dynamics.b2Body;
 	import flash.geom.Point;
 	
 	/**
@@ -12,7 +13,11 @@ package {
 		public function CannonFixedRotation(x:Number, y:Number, angle:Number = 0) {
 			super(x, y);
 			setAngle(angle);
-			rotate = new RotateFixed( -45, 45, body);
+		}
+		
+		override protected function init(myBody:b2Body):void {
+			super.init(myBody);
+			rotate = new RotateFixed( -45, 45, body, 1, currentAngle);
 			move = new MoveAB(location, new Point(location.x + 100, location.y), body);
 		}
 		
