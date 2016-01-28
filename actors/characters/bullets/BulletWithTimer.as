@@ -8,8 +8,8 @@ package {
 	 */
 	public class BulletWithTimer extends Bullet {
 		
-		public function BulletWithTimer(x:Number, y:Number, impulse:b2Vec2) {
-			super(x, y, impulse, 10);
+		public function BulletWithTimer(x:Number, y:Number) {
+			super(x, y, 10);
 			removingTimer.activate();
 		}
 	}

@@ -9,9 +9,9 @@ package {
 	public class Particle extends Collectible {
 		private var impulse:b2Vec2 = new b2Vec2();
 		
-		public function Particle(x:Number, y:Number) {
+		public function Particle(x:Number, y:Number, radius:Number = 2) {
 			var loc:Point = new Point(x * PhysicalWorld.MIN_SQARE, y * PhysicalWorld.MIN_SQARE);
-			shape = new CircleShape(2);
+			shape = new CircleShape(radius);
 			super(loc);
 		}
 		

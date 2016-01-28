@@ -66,6 +66,9 @@ package {
 		}
 		
 		public static function createBody(bodyDef:b2BodyDef):b2Body {
+			if (world.GetBodyCount() > 500) {
+				return null;
+			}
 			return world.CreateBody(bodyDef);
 		}
 		

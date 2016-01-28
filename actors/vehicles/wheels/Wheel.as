@@ -25,7 +25,7 @@ package {
 			if (!bodyBuilder) {
 				bodyBuilder = new StaticBodyBuilder();
 				bodyBuilder.density = 0.5;
-				bodyBuilder.friction = 0.7;
+				bodyBuilder.friction = 1;
 				bodyBuilder.restitution = 0.2;
 				bodyBuilder.groupIndex = -1;
 			}

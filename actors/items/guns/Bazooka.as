@@ -71,7 +71,8 @@ package {
 			var angle:Number = Math.PI / 2 - Math.atan2(x - px, y - py);
 			var ox:Number = Math.cos(angle) / 2;
 			var oy:Number = Math.sin(angle) / 2;
-			new Bullet(px + ox, py + oy, 5, new b2Vec2(ox*10, oy*10));
+			var bullet:Bullet = new Bullet(px + ox, py + oy, 5);
+			bullet.applyImpulse(ox * 10, oy * 10);
 		}
 		
 		private function click(e:MouseEvent):void {

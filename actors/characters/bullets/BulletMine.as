@@ -8,17 +8,17 @@ package {
 	 */
 	public class BulletMine extends Bullet {
 		
-		public function BulletMine(x:Number, y:Number, impulse:b2Vec2) {
-			super(x, y, impulse, 10);
+		public function BulletMine(x:Number, y:Number) {
+			super(x, y, 10);
 		}
 		
-		override public function hit(body:b2Body):void {
-			getBody().SetLinearVelocity(new b2Vec2(0, 0));
-			if (!body) {
+		override public function hit(hitBody:b2Body):void {
+			body.SetLinearVelocity(new b2Vec2(0, 0));
+			if (!hitBody) {
 				return void;
 			}
-			if (body.GetUserData() is Player) {
-				super.hit(body);
+			if (hitBody.GetUserData() is Player) {
+				super.hit(hitBody);
 			}
 		}
 	}

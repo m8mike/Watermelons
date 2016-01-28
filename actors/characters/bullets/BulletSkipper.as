@@ -9,13 +9,13 @@ package {
 	public class BulletSkipper extends Bullet {
 		private var skipsLeft:int = 5;
 		
-		public function BulletSkipper(x:Number, y:Number, impulse:b2Vec2) {
-			super(x, y, impulse, 0);
+		public function BulletSkipper(x:Number, y:Number) {
+			super(x, y, 0);
 		}
 		
-		override public function hit(body:b2Body):void {
+		override public function hit(hitBody:b2Body):void {
 			if (skipsLeft <= 0) {
-				super.hit(body);
+				super.hit(hitBody);
 			} else {
 				skipsLeft--;
 			}

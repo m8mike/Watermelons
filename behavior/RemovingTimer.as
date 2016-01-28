@@ -9,10 +9,12 @@ package {
 	public class RemovingTimer extends Behavior {
 		private var timeToRemove:int;
 		private var started:Boolean = false;
+		private var actor:Actor;
 		
-		public function RemovingTimer(body:b2Body, time:int = 0) {
+		public function RemovingTimer(actor:Actor, time:int = 0) {
+			this.actor = actor;
 			timeToRemove = time;
-			super(body);
+			super(null);
 		}
 		
 		public function activate():void {
@@ -26,7 +28,7 @@ package {
 			if (timeToRemove > 0) {
 				timeToRemove--;
 			} else {
-				Actor(body.GetUserData()).destroy();
+				actor.destroy();
 			}
 			super.update();
 		}

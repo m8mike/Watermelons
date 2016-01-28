@@ -10,19 +10,18 @@ package {
 	public class BulletCloud extends Bullet {
 		private var locInc:b2Vec2;
 		
-		public function BulletCloud(x:Number, y:Number, impulse:b2Vec2, size:int = 7) {
-			super(x, y, impulse, 0, size);
+		public function BulletCloud(x:Number, y:Number, size:int = 7) {
+			super(x, y, 0, size);
 		}
 		
-		override public function hit(body:b2Body):void {
-			if (!body) {
+		override public function hit(hitBody:b2Body):void {
+			if (!hitBody) {
 				return void;
 			}
-			trace(body.GetUserData());
-			if (body.GetUserData() is Platform) {
-				locInc = getBody().GetWorldCenter().Copy();
+			if (hitBody.GetUserData() is Platform) {
+				locInc = body.GetWorldCenter().Copy();
 				locInc.Multiply(3 / 2);
-				super.hit(body);
+				super.hit(hitBody);
 			}
 		}
 		

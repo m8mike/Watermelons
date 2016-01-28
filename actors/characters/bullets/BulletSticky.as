@@ -8,12 +8,12 @@ package {
 	 */
 	public class BulletSticky extends Bullet {
 		
-		public function BulletSticky(x:Number, y:Number, impulse:b2Vec2) {
-			super(x, y, impulse, 10);
+		public function BulletSticky(x:Number, y:Number) {
+			super(x, y, 10);
 		}
 		
-		override public function hit(body:b2Body):void {
-			getBody().SetLinearVelocity(new b2Vec2(0, 0));
+		override public function hit(hitBody:b2Body):void {
+			body.SetLinearVelocity(new b2Vec2(0, 0));
 		}
 	}
 }

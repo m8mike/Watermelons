@@ -26,7 +26,7 @@ package {
 			new LevelDirector();
 			instance.addEventListener(Event.ENTER_FRAME, gameCycle);
 			player = new Player(locToSpawn.x, locToSpawn.y);
-			new JetpackBonus(locToSpawn.x, locToSpawn.y);
+			new RevolverBonus(locToSpawn.x, locToSpawn.y);
 			new Controls();
 		}
 		

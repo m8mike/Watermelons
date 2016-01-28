@@ -9,20 +9,23 @@ package {
 	public class BulletSplitter extends Bullet {
 		private var locInc:b2Vec2;
 		
-		public function BulletSplitter(x:Number, y:Number, impulse:b2Vec2) {
-			super(x, y, impulse, 0);
+		public function BulletSplitter(x:Number, y:Number, radius:Number) {
+			super(x, y, 0, radius);
 		}
 		
-		override public function hit(body:b2Body):void {
-			super.hit(body);
-			locInc = getBody().GetWorldCenter().Copy();
+		override public function hit(hitBody:b2Body):void {
+			super.hit(hitBody);
+			locInc = body.GetWorldCenter().Copy();
 			locInc.Multiply(3 / 2);
 		}
 		
 		override protected function cleanUpBeforeRemoving():void {
-			new Bullet(locInc.x-1, locInc.y, new b2Vec2(-0.1, -0.1), 0, 4);
-			new Bullet(locInc.x+1, locInc.y, new b2Vec2(0.1, 0.1), 0, 4);
-			new Bullet(locInc.x, locInc.y-1, new b2Vec2(0, -0.1), 0, 4);
+			var bulletLeft:Bullet = new Bullet(locInc.x - 1, locInc.y, 0, 4);
+			var bulletRight:Bullet = new Bullet(locInc.x + 1, locInc.y, 0, 4);
+			var bulletUp:Bullet = new Bullet(locInc.x, locInc.y - 1, 0, 4);
+			bulletLeft.applyImpulse( -0.1, -0.1);
+			bulletRight.applyImpulse(0.1, 0.1);
+			bulletUp.applyImpulse(0, -0.1);
 			super.cleanUpBeforeRemoving();
 		}
 	}

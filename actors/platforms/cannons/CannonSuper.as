@@ -32,7 +32,8 @@ package {
 			var impulse:b2Vec2 = new b2Vec2();
 			impulse.x = 0.8 * Math.cos(angle);
 			impulse.y = 0.8 * Math.sin(angle);
-			new BulletSkipper(bulletLoc.x, bulletLoc.y, impulse);
+			var bullet:BulletSkipper = new BulletSkipper(bulletLoc.x, bulletLoc.y);
+			bullet.applyImpulse(impulse.x, impulse.y);
 		}
 		
 		override protected function createShapes():void {

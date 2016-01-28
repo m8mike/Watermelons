@@ -17,8 +17,8 @@ package {
 				character.update();
 			}
 			for each (var platform:Platform in platforms) {
-				var pp:Point = platform.location.clone();
-				var dist:Number = Point.distance(Platformer.player.getSpriteLoc(), pp);
+				var pLoc:Point = platform.location.clone();
+				var dist:Number = Point.distance(Platformer.player.getSpriteLoc(), pLoc);
 				if (dist > 1000) {
 					platform.hide();
 				} else {
@@ -30,14 +30,19 @@ package {
 			}
 			for each (var collectible:Actor in collectibles) {
 				collectible.update();
+				var cLoc:Point = collectible.location.clone();
+				dist = Point.distance(Platformer.player.getSpriteLoc(), cLoc);
+				if (dist > 1000) {
+					collectible.destroy();
+				}
 			}
 			for each (var vehicle:Vehicle in vehicles) {
-				pp = vehicle.location.clone();
-				dist = Point.distance(Platformer.player.getSpriteLoc(), pp);
+				var vLoc:Point = vehicle.location.clone();
+				dist = Point.distance(Platformer.player.getSpriteLoc(), vLoc);
 				if (dist < 500 || vehicle.enterable.inside) {
 					vehicle.update();
 				} else {
-					if (!vehicle.getBody().IsSleeping()) {	
+					if (!vehicle.getBody().IsSleeping()) {
 						vehicle.getBody().PutToSleep();
 					}
 				}

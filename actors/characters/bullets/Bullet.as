@@ -7,21 +7,15 @@ package {
 	 * ...
 	 * @author ...
 	 */
-	public class Bullet extends Character {
+	public class Bullet extends Particle {
 		protected var removingTimer:RemovingTimer;
 		
-		public function Bullet(x:Number, y:Number, impulse:b2Vec2, timeToRemove:int = 10, size:int = 7) {
-			var shape:CircleShape = new CircleShape(size);
-			super(x, y);
-			if (!bodyManager) {	
-				bodyManager = new DummyBodyManager(location, this, shape);
-			}
-			condition = new Condition();			
-			getBody().ApplyImpulse(impulse.Copy(), getBody().GetWorldCenter().Copy());
-			removingTimer =  new RemovingTimer(getBody(), timeToRemove);
+		public function Bullet(x:Number, y:Number, timeToRemove:int = 10, radius:int = 7) {
+			super(x, y, radius);
+			removingTimer = new RemovingTimer(this, timeToRemove);
 		}
 		
-		public function hit(body:b2Body):void {
+		public function hit(hitBody:b2Body):void {
 			removingTimer.activate();
 		}
 		
