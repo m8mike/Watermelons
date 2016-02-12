@@ -20,17 +20,28 @@ package {
 		public var jumpTimeLeft:int = 0;
 		public var impulseReducer:int = 0;
 		
-		private var JUMP_IMPULSE:b2Vec2 = new b2Vec2(0.0, -0.3);
-		private static const JUMP_FORCE:b2Vec2 = new b2Vec2(0.0, -3.0);
+		private var jumpImpulse:b2Vec2 = new b2Vec2(0.0, -0.3);
+		private var jumpForce:b2Vec2 = new b2Vec2(0.0, -3.0);
 		private static const LEFT_WALL_IMPULSE:b2Vec2 = new b2Vec2(-0.5 / 1.5, -0.6 / 1.5);
 		private static const RIGHT_WALL_IMPULSE:b2Vec2 = new b2Vec2(0.5 / 1.5, -0.6 / 1.5);
 		
-		public function Jump(condition:Condition, body:b2Body, impulse:b2Vec2 = null) {
+		public function Jump(condition:Condition, body:b2Body, impulse:b2Vec2 = null, force:b2Vec2 = null) {
 			this.condition = condition;
 			super(body);
 			if (impulse != null) {
-				JUMP_IMPULSE = impulse;
+				jumpImpulse = impulse;
 			}
+			if (force != null) {
+				jumpForce = force;
+			}
+		}
+		
+		public function setImpulse(impulse:b2Vec2 = null):void {
+			jumpImpulse = impulse;
+		}
+		
+		public function setForce(force:b2Vec2 = null):void {
+			jumpForce = force;
 		}
 		
 		public function stopJumping():void {
@@ -119,7 +130,7 @@ package {
 		}
 		
 		private function shortJump():void {
-			body.ApplyImpulse(JUMP_IMPULSE, body.GetWorldCenter());
+			body.ApplyImpulse(jumpImpulse, body.GetWorldCenter());
 			jumpTimeLeft = JUMP_TIME;
 			impulseReducer = 0;
 		}
@@ -128,7 +139,7 @@ package {
 			if (impulseReducer < 0) {
 				impulseReducer = 0;
 			}
-			var jumpForceReduced:b2Vec2 = new b2Vec2(JUMP_FORCE.x, JUMP_FORCE.y + 0.3 * impulseReducer);
+			var jumpForceReduced:b2Vec2 = new b2Vec2(jumpForce.x, jumpForce.y + 0.3 * impulseReducer);
 			body.ApplyForce(jumpForceReduced, body.GetWorldCenter());
 			impulseReducer++;
 		}

@@ -16,6 +16,10 @@ package {
 			
 		}
 		
+		public function changeBody(newBody:b2Body):void {
+			body = newBody;
+		}
+		
 		public function remove():void {
 			body = null;
 		}

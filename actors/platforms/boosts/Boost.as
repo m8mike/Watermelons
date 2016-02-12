@@ -1,5 +1,6 @@
 package {
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.b2Body;
 	
 	/**
 	 * ...
@@ -16,7 +17,11 @@ package {
 			super(x, y, w, h);
 		}
 		
-		public function hit(vehicle:Vehicle):void {
+		override public function hit(bodyHit:b2Body):void {
+			if (!(bodyHit.GetUserData() is Vehicle)) {
+				return void;
+			}
+			var vehicle:Vehicle = bodyHit.GetUserData();
 			if (!activated) {
 				vehicle.body.ApplyImpulse(impulse, vehicle.body.GetWorldCenter().Copy());
 				activated = true;

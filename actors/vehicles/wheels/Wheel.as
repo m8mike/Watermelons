@@ -33,9 +33,11 @@ package {
 			bodyBuilder.y = location.y;
 			body = bodyBuilder.getBody(new Array(shape));
 			body.SetUserData(userData);
-			var shapeAxle:RectShape = new RectShape(shape.radius*PhysicalWorld.RATIO, shape.radius*PhysicalWorld.RATIO);
-			bodyBuilder.x = location.x - shapeAxle.width / 2;
-			bodyBuilder.y = location.y - shapeAxle.height / 2;
+			//var shapeAxle:RectShape = new RectShape(shape.radius*PhysicalWorld.RATIO, shape.radius*PhysicalWorld.RATIO);
+			var shapeAxle:CircleShape = new CircleShape(shape.radius*PhysicalWorld.RATIO/2);
+			bodyBuilder.x = location.x - shapeAxle.radius / 2;
+			/*bodyBuilder.x = location.x - shapeAxle.width / 2;
+			bodyBuilder.y = location.y - shapeAxle.height / 2;*/
 			axle = bodyBuilder.getBody(new Array(shapeAxle));
 			axle.SetUserData(userData);
 			wheelRJ = Joints.createRevoluteJoint(body, axle);
@@ -55,6 +57,14 @@ package {
 			wheelRJ.SetMotorSpeed(motorSpeed);
 			axlePJ.SetMaxMotorForce(Math.abs(600 * axlePJ.GetJointTranslation()));
 			axlePJ.SetMotorSpeed((axlePJ.GetMotorSpeed() - 2 * axlePJ.GetJointTranslation()));
+		}
+		
+		override protected function removeBodies():void {
+			//PhysicalWorld.DestroyJoint(wheelRJ);
+			//PhysicalWorld.DestroyJoint(axlePJ);
+			PhysicalWorld.safeRemoveBody(body);
+			PhysicalWorld.safeRemoveBody(axle);
+			super.removeBodies();
 		}
 	}
 }

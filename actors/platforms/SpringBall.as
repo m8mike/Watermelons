@@ -16,7 +16,7 @@ package {
 			shape = new CircleShape(PhysicalWorld.MIN_SQARE);
 		}
 		
-		public function hit(playerBody:b2Body):void {
+		override public function hit(playerBody:b2Body):void {
 			/*var angle:Number = body.GetAngle(); 
 			var x:Number = 0.3 * Math.sin(angle);
 			var y:Number = -0.3 * Math.cos(angle);

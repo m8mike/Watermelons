@@ -17,23 +17,25 @@ package {
 				character.update();
 			}
 			for each (var platform:Platform in platforms) {
-				var pLoc:Point = platform.location.clone();
+				var pLoc:Point = platform.getCenter();
 				var dist:Number = Point.distance(Platformer.player.getSpriteLoc(), pLoc);
 				if (dist > 1000) {
 					platform.hide();
 				} else {
 					platform.show();
 				}
-				if (platform.getBody()) {	
+				if (platform.getBody()) {
 					platform.update();
 				}
 			}
-			for each (var collectible:Actor in collectibles) {
+			for each (var collectible:Collectible in collectibles) {
 				collectible.update();
 				var cLoc:Point = collectible.location.clone();
 				dist = Point.distance(Platformer.player.getSpriteLoc(), cLoc);
 				if (dist > 1000) {
-					collectible.destroy();
+					collectible.hide();
+				} else if (!collectible.deleted) {
+					collectible.show();
 				}
 			}
 			for each (var vehicle:Vehicle in vehicles) {

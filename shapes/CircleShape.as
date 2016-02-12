@@ -9,7 +9,7 @@ package {
 	* @author Mad Mike
 	*/
 	public class CircleShape extends MyShape {
-		public var radius;
+		public var radius:Number;
 		
 		public function CircleShape(radius:Number) {
 			this.radius = radius / PhysicalWorld.RATIO;

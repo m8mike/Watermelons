@@ -11,7 +11,7 @@ package {
 	public class Collectible extends Actor {
 		protected var body:b2Body;
 		protected var shape:CircleShape;
-		protected var deleted:Boolean = false;
+		public var deleted:Boolean = false;
 		
 		public function Collectible(loc:Point) {
 			Updatables.addCollectible(this);
@@ -24,6 +24,11 @@ package {
 			}
 		}
 		
+		protected function init(myBody:b2Body):void {
+			body = myBody;
+			body.SetUserData(this);
+		}
+		
 		public function createBodies():void {
 			var bodyBuilder:StaticBodyBuilder = new StaticBodyBuilder();
 			bodyBuilder.density = 0;
@@ -34,7 +39,13 @@ package {
 			bodyBuilder.x = location.x;
 			bodyBuilder.y = location.y;
 			body = bodyBuilder.getBody(new Array(shape));
-			body.SetUserData(this);
+		}
+		
+		public function show():void {
+			if (!body) {
+				createBodies();
+				init(body);
+			}
 		}
 		
 		public function pick(player:Player):void {

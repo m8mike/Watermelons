@@ -18,6 +18,7 @@ package {
 		protected var spawnOffset:Point = new Point();
 		public var condition:Condition = new Condition();
 		public var jump:Jump;
+		public var lastAngle:Number = 0;
 		
 		public function Vehicle(x:Number, y:Number, w:Number = 1, h:Number = 1) {
 			var loc:Point = new Point(x * PhysicalWorld.MIN_SQARE, y * PhysicalWorld.MIN_SQARE);
@@ -28,7 +29,8 @@ package {
 			createShapes();
 			createBodies();
 			init(body);
-			jump = new Jump(condition, body, new b2Vec2(0, -20));	
+			jump = new Jump(condition, body);
+			jump.setImpulse(new b2Vec2(0, -30));
 		}
 		
 		protected function init(myBody:b2Body):void {
@@ -80,6 +82,30 @@ package {
 			loc.x = getBody().GetWorldCenter().x * 30 + spawnOffset.x;
 			loc.y = getBody().GetWorldCenter().y * 30 + spawnOffset.y;
 			return loc;
+		}
+		
+		public function respawn():void {
+			hide();
+			location = Platformer.locToSpawn.clone();
+		}
+		
+		public function show():void {
+			if (!body) {
+				createBodies();
+				init(body);
+				jump.changeBody(body);
+			}
+		}
+		
+		public function hitPlatform():void {
+			if (!body) {
+				return void;
+			}
+			var currentAngle:Number = body.GetAngle() / Math.PI * 180;
+			if (Math.abs(currentAngle-lastAngle) % 360 > 150 || Math.abs(currentAngle - lastAngle) / 360 >= 1) {
+				trace(int(Math.abs(currentAngle - lastAngle) / 360));
+			}
+			lastAngle = currentAngle;
 		}
 		
 		protected function createShapes():void {

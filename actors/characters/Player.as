@@ -31,7 +31,11 @@ package {
 		
 		override public function getSpriteLoc():Point {
 			if (vehicle) {
-				return vehicle.getLoc();
+				if (vehicle.getLoc()) {
+					return vehicle.getLoc();
+				} else {
+					return loc2Spawn;
+				}
 			}
 			if (getBody()) {
 				var worldCenter:b2Vec2 = getBody().GetWorldCenter().Copy();

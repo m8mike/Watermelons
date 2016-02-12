@@ -50,7 +50,7 @@ package {
 				return void;
 			} else if (platform is Crate) {
 				if (point.normal.y < -0.7) {
-					Crate(platform).hit();
+					Crate(platform).hit(player.getBody());
 					player.jumpOnHead();
 				}
 				return void;
@@ -106,31 +106,42 @@ package {
 			if (actor1 is Vehicle) {
 				if (actor2 is Boost) {
 					if (point.shape1 is b2PolygonShape) {
-						Boost(actor2).hit(Vehicle(actor1));
+						Boost(actor2).hit(point.shape1.GetBody());
 					}
 					return void;
 				}
-				if (actor2 is Platform && point.normal.y < -0.7) {
-					condition = Vehicle(actor1).condition;
-					if (!condition.canJump) {
-						condition.allowJumps(point.normal.x, point.normal.y);
+				if (actor2 is Platform) {
+					Platform(actor2).hit(point.shape1.GetBody());
+					Vehicle(actor1).hitPlatform();
+					if (point.shape1 is b2PolygonShape) {
+						Platformer.vehicleManager.respawn();
+					} else {
+						condition = Vehicle(actor1).condition;
+						if (!condition.canJump) {
+							condition.allowJumps(point.normal.x, point.normal.y);
+						}
 					}
+					return void;
 				}
-				return void;
 			} else if (actor2 is Vehicle) {
 				if (actor1 is Boost) {
 					if (point.shape2 is b2PolygonShape) {
-						Boost(actor1).hit(Vehicle(actor2));
+						Boost(actor1).hit(point.shape2.GetBody());
 					}
 					return void;
 				}
-				if (actor1 is Platform && point.normal.y < -0.7) {
-					condition = Vehicle(actor2).condition;
-					if (!condition.canJump) {
-						condition.allowJumps(point.normal.x, point.normal.y);
+				if (actor1 is Platform) {
+					Platform(actor1).hit(point.shape2.GetBody());
+					if (point.shape2 is b2PolygonShape) {
+						Platformer.vehicleManager.respawn();
+					} else {
+						condition = Vehicle(actor2).condition;
+						if (!condition.canJump) {
+							condition.allowJumps(point.normal.x, point.normal.y);
+						}
 					}
+					return void;
 				}
-				return void;
 			}
 			if (actor1 is GravityCircle) {
 				if (!point.shape2.GetBody().IsStatic()) {

@@ -8,7 +8,7 @@ package {
 	public class CameraManager {
 		public static var camera:Camera;
 		public static var freePoint:Point = new Point(0, 0);
-		public static var zoomRatio:Number = 1;
+		public static var zoomRatio:Number = 0.5;//1
 		
 		public static function zoomCameras(section:Point):void {
 			if (!camera) {
@@ -23,7 +23,7 @@ package {
 		
 		public static function init():void {
 			camera = new Camera(1);
-			Platformer.instance.addChild(camera);
+			Platformer.instance.stage.addChild(camera);
 		}
 		
 		public static function update():void {

@@ -1,5 +1,6 @@
 package {
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.b2Body;
 	
 	/**
 	 * ...
@@ -14,6 +15,11 @@ package {
 			super(x, y, w, h);
 			spawnOffset.x = width / 2 * PhysicalWorld.MIN_SQARE;
 			spawnOffset.y = -height / 2 * PhysicalWorld.MIN_SQARE;
+			//addWheels();
+		}
+		
+		override protected function init(myBody:b2Body):void {
+			super.init(myBody);
 			addWheels();
 		}
 		
@@ -27,6 +33,9 @@ package {
 		}
 		
 		override public function update():void {
+			if (!body) {
+				return void;
+			}
 			super.update();
 			if (enterable.inside) {
 				//autoPilot();
@@ -77,6 +86,14 @@ package {
 			applySpeed();
 		}
 		
+		override protected function removeBodies():void {
+			for each (var wheel:Wheel in wheels) {
+				wheel.destroy();
+			}
+			wheels = [];
+			super.removeBodies();
+		}
+		
 		public function control():void {
 			if (Controls.left) {
 				body.SetAngularVelocity(-2);
@@ -92,6 +109,11 @@ package {
 			}
 			if (!Controls.right && !Controls.left) {
 				body.SetAngularVelocity(0);
+			}
+			if (Controls.vehicleJump) {
+				jump.jump();
+			} else {
+				jump.dontJump();
 			}
 			if (Math.abs(motorSpeed) > 20) {
 				return void;

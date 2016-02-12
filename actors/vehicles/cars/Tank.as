@@ -1,4 +1,5 @@
 package {
+	import Box2D.Common.Math.b2Vec2;
 	
 	/**
 	 * ...
@@ -10,6 +11,7 @@ package {
 			super(x, y, 3, 2);
 			spawnOffset.x = width / 2 * PhysicalWorld.MIN_SQARE;
 			spawnOffset.y = -height / 2 * PhysicalWorld.MIN_SQARE;
+			jump.setForce(new b2Vec2(100.0, -250.0));
 		}
 		
 		override protected function addWheels():void {

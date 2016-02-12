@@ -33,7 +33,7 @@ package {
 		}
 		
 		override public function getSimpleSprite(location:Point):Sprite {
-			var sprite = new Sprite();
+			var sprite:Sprite = new Sprite();
 			sprite.graphics.lineStyle(2, Math.random() * 0x1000000);
 			for each (var listOfPoints:Array in _coords) {
 				var firstPoint:Point = listOfPoints[0];

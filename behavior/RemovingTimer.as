@@ -8,12 +8,14 @@ package {
 	 */
 	public class RemovingTimer extends Behavior {
 		private var timeToRemove:int;
+		private var maxTime:int;
 		private var started:Boolean = false;
 		private var actor:Actor;
 		
 		public function RemovingTimer(actor:Actor, time:int = 0) {
 			this.actor = actor;
 			timeToRemove = time;
+			maxTime = time;
 			super(null);
 		}
 		
@@ -31,6 +33,11 @@ package {
 				actor.destroy();
 			}
 			super.update();
+		}
+		
+		public function deactivate():void {
+			started = false;
+			timeToRemove = maxTime;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package {
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.b2Body;
 	
 	/**
 	 * ...
@@ -12,7 +13,7 @@ package {
 			super(x, y, size, size);
 		}
 		
-		public function hit():void {
+		override public function hit(bodyHit:b2Body):void {
 			var loc2Spawn:b2Vec2 = body.GetWorldCenter().Copy();
 			loc2Spawn.Multiply(3 / 2);
 			for (var i:int = 0; i < 25; i++) {

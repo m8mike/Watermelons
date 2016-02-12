@@ -33,8 +33,8 @@ package {
 		}
 		
 		public function setAngle(angle:Number):void {
-			if (body) {	
-				currentAngle = angle;
+			currentAngle = angle;
+			if (body) {
 				body.SetXForm(body.GetPosition(), currentAngle / 180 * Math.PI);
 			}
 		}
@@ -60,6 +60,12 @@ package {
 		
 		public function getBody():b2Body {
 			return body;
+		}
+		
+		public function hit(bodyHit:b2Body):void {}
+		
+		public function getCenter():Point {
+			return location.clone();
 		}
 		
 		override protected function cleanUpBeforeRemoving():void {

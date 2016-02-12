@@ -19,7 +19,7 @@ package {
 			shape = new CircleShape(radius*PhysicalWorld.MIN_SQARE);
 		}
 		
-		public function hit(somebody:b2Body):void {
+		override public function hit(somebody:b2Body):void {
 			var center:b2Vec2 = body.GetWorldCenter().Copy();
 			var bodyCenter:b2Vec2 = somebody.GetWorldCenter().Copy();
 			var vec:b2Vec2 = new b2Vec2(bodyCenter.x - center.x, bodyCenter.y - center.y);

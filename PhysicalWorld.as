@@ -22,6 +22,7 @@ package {
 		
 		private static var fps:Number = 20.0;
 		private static var bodiesToRemove:Array = [];
+		private static var jointsToRemove:Array = [];
 		public static var actorsWhoNeedBody:Array = [];
 		
 		public static function setupDebugDraw():void {
@@ -38,8 +39,8 @@ package {
 		
 		public static function setupPhysicsWorld():void {
 			var worldBounds:b2AABB = new b2AABB();
-			worldBounds.lowerBound.Set(-500000 / RATIO, -50000 / RATIO);
-			worldBounds.upperBound.Set(500000 / RATIO, 50000 / RATIO);
+			worldBounds.lowerBound.Set(-5000 / RATIO, -50000 / RATIO);
+			worldBounds.upperBound.Set(100000 / RATIO, 50000 / RATIO);
 			
 			var allowSleep:Boolean = true;
 			
@@ -72,6 +73,12 @@ package {
 			return world.CreateBody(bodyDef);
 		}
 		
+		public static function DestroyJoint(joint:b2Joint):void {
+			if (jointsToRemove.indexOf(joint) < 0) {
+				jointsToRemove.push(joint);
+			}
+		}
+		
 		public static function createJoint(def:b2JointDef):b2Joint {
 			return world.CreateJoint(def);
 		}
@@ -83,8 +90,14 @@ package {
 		}
 		
 		private static function reallyRemoveActors():void {
+			for each (var joint:b2Joint in jointsToRemove) {
+				world.DestroyJoint(joint);
+			}
+			jointsToRemove = [];
 			for each (var removeMe:b2Body in bodiesToRemove) {
-				world.DestroyBody(removeMe);
+				if (removeMe) {	
+					world.DestroyBody(removeMe);
+				}
 			}
 			bodiesToRemove = [];
 		}

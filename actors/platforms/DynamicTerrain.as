@@ -8,35 +8,47 @@ package {
 	 */
 	public class DynamicTerrain extends Platform {
 		// random hill's height
+		public var randomHeight:Number;
 		public var nextHill:Number = 140 + Math.random() * 200;
 		protected var shapes:Array = [];
 		
-		public function DynamicTerrain(x:Number, y:Number, next:Number = 0) {
+		public static const LOW:int = 50;
+		public static const NORMAL:int = 100;
+		public static const HIGH:int = 150;
+		
+		private var center:Point;
+		
+		public function DynamicTerrain(x:Number, y:Number, next:Number = 0, maxHeight:int = 100) {
 			super(x, y);
+			randomHeight = Math.random() * maxHeight;
 			nextHill = drawHill(20, 0, next);
+			center = new Point(x * 20, y * 20 + nextHill);
 		}
 		
 		protected function drawHill(pixelStep:int, xOffset:Number, yOffset:Number):Number {
 			var hillStartY:Number = yOffset;
 			var hillWidth:Number = 640;
-			var hillSliceWidth = hillWidth / pixelStep;
+			var hillSliceWidth:Number = hillWidth / pixelStep;
 			var hillSlice:Array;
-			var randomHeight:Number = Math.random() * 100;
 			if (xOffset != 0) {
 				hillStartY -= randomHeight;
 			}
 			shapes = [];
 			for (var j:int = 0; j < hillSliceWidth; j++) {
 				hillSlice = [];
-				hillSlice.push(new Point((j * pixelStep + xOffset), 480));
+				hillSlice.push(new Point((j * pixelStep + xOffset), 480 + yOffset));
 				hillSlice.push(new Point((j * pixelStep + xOffset), 
 					hillStartY - randomHeight + randomHeight * Math.cos(2 * Math.PI / hillSliceWidth * j)));
 				hillSlice.push(new Point(((j + 1) * pixelStep + xOffset), 
 					hillStartY - randomHeight + randomHeight * Math.cos(2 * Math.PI / hillSliceWidth * (j + 1))));
-				hillSlice.push(new Point(((j + 1) * pixelStep + xOffset), 480));
+				hillSlice.push(new Point(((j + 1) * pixelStep + xOffset), 480 + yOffset));
 				shapes.push(new CustomShape(hillSlice));
 			}
 			return hillStartY;
+		}
+		
+		override public function getCenter():Point {
+			return center.clone();
 		}
 		
 		override protected function createBodies():void {
