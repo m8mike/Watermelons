@@ -9,6 +9,7 @@ package {
 	 */
 	public class Actor {
 		public var location:Point;
+		public var deleted:Boolean = false;
 		
 		public function Actor(loc:Point) {
 			location = loc.clone();

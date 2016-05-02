@@ -9,7 +9,7 @@ package {
 		public function StaticBodyBuilder() {
 			density = 0;
 			groupIndex = -2;
-			friction = 0.2;
+			friction = 1;//0.2
 			restitution = 0.3;
 		}
 	

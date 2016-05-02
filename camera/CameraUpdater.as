@@ -13,7 +13,9 @@ package {
 		
 		public static function getCameraSection():Point {
 			if (Platformer.player) {
-				return getOnePlayerSection();
+				var lastLoc:Point = getOnePlayerSection();
+				CameraManager.freePoint = lastLoc.clone();
+				return lastLoc;
 			} else {
 				return CameraManager.freePoint;
 			}

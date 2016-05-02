@@ -7,6 +7,7 @@ package  {
 	public class DownHillTerrain extends Terrain {
 		
 		public function DownHillTerrain(location:Point, numHills:int) {
+			super(location, numHills);
 			var nextHeight:Number =  140 + Math.random() * 200;
 			var terrain:DynamicDownhill;
 			terrain = new DynamicDownhill(j * 640 / 20 + location.x, 10, location.y);
@@ -16,7 +17,6 @@ package  {
 				nextHeight = terrain.nextHill;
 			}
 			finishPoint = new Point(location.x + numHills * 640 / 20, nextHeight);
-			super(location, numHills);
 		}
 	}
 }

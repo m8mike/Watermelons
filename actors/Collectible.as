@@ -11,7 +11,6 @@ package {
 	public class Collectible extends Actor {
 		protected var body:b2Body;
 		protected var shape:CircleShape;
-		public var deleted:Boolean = false;
 		
 		public function Collectible(loc:Point) {
 			Updatables.addCollectible(this);
@@ -25,6 +24,9 @@ package {
 		}
 		
 		protected function init(myBody:b2Body):void {
+			if (deleted) {
+				return void;
+			}
 			body = myBody;
 			body.SetUserData(this);
 		}

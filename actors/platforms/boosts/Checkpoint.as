@@ -11,7 +11,8 @@ package  {
 		}
 		
 		override public function hit(bodyHit:b2Body):void {
-			
+			LevelDirector.currentLevel.onCheckpoint();
+			LevelDirector.currentLevel.setLastCheckpointLoc(location.x, location.y);
 		}
 	}
 }

@@ -8,8 +8,16 @@ package {
 	 */
 	public class CarBuilder extends Vehicle {
 		private var motorSpeed:Number = 0;
-		protected var wheels:Array = [];
-		private var nitro:int = 100;
+		public var wheels:Array = [];
+		
+		public var maxSpeed:Number = 30//min 10 max 30
+		public var acceleration:Number = 1;// min 0.1 max 1.0
+		public var rotationSpeed:Number = 7;//min 2 max 7
+		//protected var jumpForce:Number = 10;// max 100.0, -250.0
+		protected var nitroSpeed:Number = 30;
+		protected var nitro:int = 100;
+		protected var maxNitro:int = 100;
+		protected var maxJumps:int = 10;
 		
 		public function CarBuilder(x:Number, y:Number, w:Number = 3, h:Number = 2) {
 			super(x, y, w, h);
@@ -46,7 +54,7 @@ package {
 		override protected function createBodies():void {
 			if (!bodyBuilder) {
 				bodyBuilder = new StaticBodyBuilder();
-				bodyBuilder.density = 1;
+				bodyBuilder.density = 0.5;
 				bodyBuilder.friction = 1;
 				bodyBuilder.restitution = 0.2;
 				bodyBuilder.groupIndex = -1;
@@ -64,19 +72,20 @@ package {
 			} else if (body.GetAngle() < 0) {
 				body.SetAngularVelocity(2);
 			}
-			if (Math.abs(motorSpeed) < 20) {
-				motorSpeed -= 0.5;
+			if (Math.abs(motorSpeed) < maxSpeed) {
+				motorSpeed -= acceleration;
 			}
 			/*if (Controls.up && onGround) {
 				body.ApplyImpulse(new b2Vec2(0, -20), body.GetWorldCenter().Copy());
 			}*/
 			if (Controls.up) {
 				jump.jump();
-			} else {
-				jump.dontJump();
 			}
-			if (Controls.right && nitro>0) {
-				body.ApplyForce(new b2Vec2(30*Math.cos(body.GetAngle()), 30*Math.sin(body.GetAngle())), body.GetWorldCenter().Copy());
+			if (Controls.right && nitro > 0) {
+				var angle:Number = body.GetAngle();
+				body.ApplyForce(new b2Vec2(nitroSpeed * Math.cos(angle), 
+										   nitroSpeed * Math.sin(angle)), 
+										  body.GetWorldCenter().Copy());
 				nitro--;
 			}
 			if (!Controls.right && nitro<100) {
@@ -96,10 +105,10 @@ package {
 		
 		public function control():void {
 			if (Controls.left) {
-				body.SetAngularVelocity(-2);
+				body.SetAngularVelocity(-rotationSpeed);
 			}
 			if (Controls.right) {
-				body.SetAngularVelocity(2);
+				body.SetAngularVelocity(rotationSpeed);
 			}
 			if (!Controls.up && !Controls.down) {
 				motorSpeed = 0;
@@ -112,17 +121,20 @@ package {
 			}
 			if (Controls.vehicleJump) {
 				jump.jump();
+			}
+			/*if (Controls.vehicleJump) {
+				jump.jump();
 			} else {
 				jump.dontJump();
-			}
-			if (Math.abs(motorSpeed) > 20) {
+			}*/
+			if (Math.abs(motorSpeed) > maxSpeed) {
 				return void;
 			}
 			if (Controls.up) {
-				motorSpeed -= 0.5;
+				motorSpeed -= acceleration;
 			}
 			if (Controls.down) {
-				motorSpeed += 0.5;
+				motorSpeed += acceleration;
 			}
 			if (Controls.up || Controls.down) {
 				applySpeed();

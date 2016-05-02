@@ -7,11 +7,11 @@ package {
 	 * @author Mad Mike
 	 */
 	public class StandardMoving extends Platform {
-		private var move:MoveAB;
-		private var rotate:Boolean;
-		private var location1:Point;
+		protected var move:MoveAB;
+		protected var rotate:Boolean;
+		protected var location1:Point;
 		
-		public function StandardMoving(x:Number, y:Number, loc1:Point, w:Number = 1, h:Number = 1, rotate = false) {
+		public function StandardMoving(x:Number, y:Number, loc1:Point, w:Number = 1, h:Number = 1, rotate:Boolean = false) {
 			super(x, y, w, h);
 			location1 = loc1.clone();
 			location1.x *= PhysicalWorld.MIN_SQARE;
@@ -28,6 +28,7 @@ package {
 			move.update();
 			if (!rotate) {	
 				body.SetAngularVelocity(0);
+				body.m_sweep.a = 0;
 			}
 			super.update();
 		}

@@ -1,7 +1,9 @@
 package {
 	import Box2D.Collision.b2ContactPoint;
 	import Box2D.Collision.Shapes.b2PolygonShape;
+	import Box2D.Collision.Shapes.b2Shape;
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2ContactListener;
 	
 	/**
@@ -80,8 +82,21 @@ package {
 			}
 		}
 		
+		private function playerRemovePlatform(player:Character, platform:Platform, point:b2ContactPoint):void {
+			player.condition.disallowJumps();
+			if (platform is Cloud) {
+				player.condition.inCloud = false;
+			} else if (platform is Sticky || platform is Gummy) {
+				player.condition.onSticky = false;
+			}
+		}
+		
 		private function collect(player:Player, collectible:Collectible):void {
 			collectible.pick(player);
+		}
+		
+		private function collectibleHitsPlatform(collectible:Collectible, platform:Platform, point:b2ContactPoint):void {
+			collectible.destroy();
 		}
 		
 		private function bulletHitSomething(bullet:Bullet, something:Actor):void {
@@ -94,6 +109,31 @@ package {
 			}
 		}
 		
+		private function vehicleHitsPlatform(vehicle:Vehicle, platform:Platform, vehBody:b2Body, shape:b2Shape):void {
+			platform.hit(vehBody);
+			vehicle.hitPlatform();
+			if (shape is b2PolygonShape) {
+				LevelDirector.currentLevel.respawn();
+			} else {
+				var condition:Condition = vehicle.condition;
+				if (!condition.canJump) {
+					condition.canJump = true;
+				}
+			}
+		}
+		
+		private function vehicleHitsTerrain(vehicle:Vehicle, terrain:Terrain, shape:b2Shape):void {
+			vehicle.hitPlatform();
+			if (shape is b2PolygonShape) {
+				LevelDirector.currentLevel.respawn();
+			} else {
+				var condition:Condition = vehicle.condition;
+				if (!condition.canJump) {
+					condition.canJump = true;
+				}
+			}
+		}
+		
 		override public function Add(point:b2ContactPoint):void {
 			addAndPersist(point);
 			super.Add(point);
@@ -102,7 +142,6 @@ package {
 		private function addAndPersist(point:b2ContactPoint):void {
 			var actor1:Actor = point.shape1.GetBody().GetUserData();
 			var actor2:Actor = point.shape2.GetBody().GetUserData();
-			var condition:Condition;
 			if (actor1 is Vehicle) {
 				if (actor2 is Boost) {
 					if (point.shape1 is b2PolygonShape) {
@@ -111,16 +150,11 @@ package {
 					return void;
 				}
 				if (actor2 is Platform) {
-					Platform(actor2).hit(point.shape1.GetBody());
-					Vehicle(actor1).hitPlatform();
-					if (point.shape1 is b2PolygonShape) {
-						Platformer.vehicleManager.respawn();
-					} else {
-						condition = Vehicle(actor1).condition;
-						if (!condition.canJump) {
-							condition.allowJumps(point.normal.x, point.normal.y);
-						}
-					}
+					vehicleHitsPlatform(Vehicle(actor1), Platform(actor2), point.shape1.GetBody(), point.shape1);
+					return void;
+				}
+				if (actor2 is Terrain) {
+					vehicleHitsTerrain(Vehicle(actor1), Terrain(actor2), point.shape1);
 					return void;
 				}
 			} else if (actor2 is Vehicle) {
@@ -131,15 +165,11 @@ package {
 					return void;
 				}
 				if (actor1 is Platform) {
-					Platform(actor1).hit(point.shape2.GetBody());
-					if (point.shape2 is b2PolygonShape) {
-						Platformer.vehicleManager.respawn();
-					} else {
-						condition = Vehicle(actor2).condition;
-						if (!condition.canJump) {
-							condition.allowJumps(point.normal.x, point.normal.y);
-						}
-					}
+					vehicleHitsPlatform(Vehicle(actor2), Platform(actor1), point.shape2.GetBody(), point.shape2);
+					return void;
+				}
+				if (actor1 is Terrain) {
+					vehicleHitsTerrain(Vehicle(actor2), Terrain(actor1), point.shape2);
 					return void;
 				}
 			}
@@ -181,22 +211,9 @@ package {
 			}
 		}
 		
-		private function collectibleHitsPlatform(collectible:Collectible, platform:Platform, point:b2ContactPoint):void {
-			collectible.destroy();
-		}
-		
 		override public function Persist(point:b2ContactPoint):void {
 			addAndPersist(point);
 			super.Persist(point);
-		}
-		
-		private function playerRemovePlatform(player:Character, platform:Platform, point:b2ContactPoint):void {
-			player.condition.disallowJumps();
-			if (platform is Cloud) {
-				player.condition.inCloud = false;
-			} else if (platform is Sticky || platform is Gummy) {
-				player.condition.onSticky = false;
-			}
 		}
 		
 		override public function Remove(point:b2ContactPoint):void {

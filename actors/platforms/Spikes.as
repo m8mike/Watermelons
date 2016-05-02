@@ -12,7 +12,7 @@ package {
 		}
 		
 		override public function hit(bodyHit:b2Body):void {
-			Platformer.vehicleManager.respawn();
+			LevelDirector.currentLevel.respawn();
 		}
 	}
 }

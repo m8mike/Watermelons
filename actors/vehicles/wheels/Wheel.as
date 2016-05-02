@@ -26,7 +26,7 @@ package {
 				bodyBuilder = new StaticBodyBuilder();
 				bodyBuilder.density = 0.5;
 				bodyBuilder.friction = 1;
-				bodyBuilder.restitution = 0.2;
+				bodyBuilder.restitution = 0.6;
 				bodyBuilder.groupIndex = -1;
 			}
 			bodyBuilder.x = location.x;

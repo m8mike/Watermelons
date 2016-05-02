@@ -10,7 +10,7 @@ package {
 	public class MoveAB extends Behavior {
 		private var vel1:b2Vec2;
 		private var vel2:b2Vec2;
-		private var k:int = 2;
+		private var k:int = 4;
 		
 		public var point1:Point;
 		public var point2:Point;

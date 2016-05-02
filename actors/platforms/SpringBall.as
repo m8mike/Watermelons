@@ -7,13 +7,15 @@ package {
 	 * @author ...
 	 */
 	public class SpringBall extends Platform {
+		private var radius:Number = 1;
 		
-		public function SpringBall(x:Number, y:Number) {
+		public function SpringBall(x:Number, y:Number, r:Number = 1) {
+			radius = r;
 			super(x, y, 1, 1);
 		}
 		
 		override protected function createShapes():void {
-			shape = new CircleShape(PhysicalWorld.MIN_SQARE);
+			shape = new CircleShape(PhysicalWorld.MIN_SQARE * radius);
 		}
 		
 		override public function hit(playerBody:b2Body):void {
@@ -21,15 +23,15 @@ package {
 			var x:Number = 0.3 * Math.sin(angle);
 			var y:Number = -0.3 * Math.cos(angle);
 			playerBody.ApplyImpulse(new b2Vec2(x, y), playerBody.GetWorldCenter());*/
-			playerBody.SetLinearVelocity(new b2Vec2(0, 0));
+			//playerBody.SetLinearVelocity(new b2Vec2(0, 0));
 		}
 		
 		override protected function createBodies():void {
 			if (!bodyBuilder) {
 				bodyBuilder = new StaticBodyBuilder();
 				bodyBuilder.density = 0;
-				bodyBuilder.friction = 0.2;
-				bodyBuilder.restitution = 0;
+				bodyBuilder.friction = 0.6;
+				bodyBuilder.restitution = 0.1;
 				bodyBuilder.groupIndex = -2;
 			}
 			bodyBuilder.x = location.x;
@@ -39,8 +41,8 @@ package {
 			body.SetUserData(this);
 		}
 		
-		override public function hide():void {
+		/*override public function hide():void {
 			//чтобы не удалялось при отдалении
-		}
+		}*/
 	}
 }

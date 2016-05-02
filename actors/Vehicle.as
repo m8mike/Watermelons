@@ -17,7 +17,7 @@ package {
 		protected var player:Player;
 		protected var spawnOffset:Point = new Point();
 		public var condition:Condition = new Condition();
-		public var jump:Jump;
+		public var jump:VehicleJump;
 		public var lastAngle:Number = 0;
 		
 		public function Vehicle(x:Number, y:Number, w:Number = 1, h:Number = 1) {
@@ -29,11 +29,13 @@ package {
 			createShapes();
 			createBodies();
 			init(body);
-			jump = new Jump(condition, body);
-			jump.setImpulse(new b2Vec2(0, -30));
+			jump = new VehicleJump(condition, body);
 		}
 		
 		protected function init(myBody:b2Body):void {
+			if (deleted) {
+				return void;
+			}
 			body = myBody;
 			body.SetUserData(this);
 		}
@@ -42,6 +44,7 @@ package {
 			if (!player) {
 				return void;
 			}
+			jump.update();
 			enterable.update(onExit);
 			super.update();
 		}
@@ -86,7 +89,12 @@ package {
 		
 		public function respawn():void {
 			hide();
-			location = Platformer.locToSpawn.clone();
+			location = LevelDirector.currentLevel.getSpawnLoc();
+			lastAngle = 0;
+			if (!body) {
+				return void;
+			}
+			lastAngle = body.GetAngle() / Math.PI * 180;
 		}
 		
 		public function show():void {
@@ -102,8 +110,9 @@ package {
 				return void;
 			}
 			var currentAngle:Number = body.GetAngle() / Math.PI * 180;
-			if (Math.abs(currentAngle-lastAngle) % 360 > 150 || Math.abs(currentAngle - lastAngle) / 360 >= 1) {
-				trace(int(Math.abs(currentAngle - lastAngle) / 360));
+			if (Math.abs(currentAngle - lastAngle) > 200) {
+				var stunts:int = int(Math.abs(currentAngle - lastAngle) / 360);
+				LevelDirector.currentLevel.onStunt(stunts);
 			}
 			lastAngle = currentAngle;
 		}

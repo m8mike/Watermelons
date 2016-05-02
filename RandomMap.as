@@ -56,7 +56,7 @@ package {
 			var locToSpawn:Point = possiblePoints[randomInt];
 			locToSpawn.x /= 30;
 			locToSpawn.y /= 30;
-			Platformer.locToSpawn = locToSpawn;
+			LevelDirector.currentLevel.setSpawnLoc(locToSpawn.x, locToSpawn.y);
 			possiblePoints.splice(randomInt, 1);
 			for (m = 1; m < mapHeight - 1; m++) {
 				for (n = 1; n < mapWidth - 1; n++) {

@@ -11,6 +11,8 @@ package {
 		private static var platforms:Array = [];
 		private static var collectibles:Array = [];
 		private static var vehicles:Array = [];
+		private static var menus:Array = [];
+		public static var modeUpdate:Function;
 		
 		public static function updateAll():void {
 			for each (var character:Actor in characters) {
@@ -49,6 +51,12 @@ package {
 					}
 				}
 			}
+			for each (var menu:Menu in menus) {
+				menu.update();
+			}
+			if (modeUpdate != null) {
+				modeUpdate();
+			}
 			//Animation.updateAll();
 		}
 		
@@ -76,6 +84,12 @@ package {
 			}
 		}
 		
+		public static function addMenu(menu:Menu):void {
+			if (menus.indexOf(menu) == -1) {
+				menus.push(menu);
+			}
+		}
+		
 		public static function removeCharacter(character:Character):void {
 			characters.splice(characters.indexOf(character), 1);
 		}
@@ -90,6 +104,53 @@ package {
 		
 		public static function removeVehicle(vehicle:Vehicle):void {
 			vehicles.splice(vehicles.indexOf(vehicle), 1);
+		}
+		
+		public static function removeMenu(menu:Menu):void {
+			menus.splice(menus.indexOf(menu), 1);
+		}
+		
+		public static function removeAll():void {
+			while (characters.length) {
+				characters[0].deleted = true;
+				characters[0].destroy();
+			}
+			while (platforms.length) {
+				platforms[0].deleted = true;
+				platforms[0].destroy();
+			}
+			while (collectibles.length) {
+				collectibles[0].deleted = true;
+				collectibles[0].destroy();
+			}
+			while (vehicles.length) {
+				vehicles[0].deleted = true;
+				vehicles[0].destroy();
+			}
+			while (CameraManager.gameLayer.numChildren) {
+				CameraManager.gameLayer.removeChildAt(0);
+			}
+			MyTimer.reset();
+			/*trace(characters.length + " characters not deleted");
+			trace(platforms.length + " platforms not deleted");
+			trace(collectibles.length + " collectibles not deleted");
+			trace(vehicles.length + " vehicles not deleted");*/
+			/*for each (var character:Actor in characters) {
+				character.destroy();
+				character.deleted = true;
+			}
+			for each (var platform:Platform in platforms) {
+				platform.destroy();
+				platform.deleted = true;
+			}
+			for each (var collectible:Collectible in collectibles) {
+				collectible.destroy();
+				collectible.deleted = true;
+			}
+			for each (var vehicle:Vehicle in vehicles) {
+				vehicle.destroy();
+				vehicle.deleted = true;
+			}*/
 		}
 	}
 }

@@ -1,4 +1,5 @@
 package {
+	import Box2D.Dynamics.b2Body;
 	
 	/**
 	 * ...
@@ -10,7 +11,8 @@ package {
 			super(x, y);
 		}
 		
-		override public function hit(vehicle:Vehicle):void {
+		override public function hit(bodyHit:b2Body):void {
+			var vehicle:Vehicle = bodyHit.GetUserData();
 			vehicle.jump.jump();
 		}
 	}

@@ -39,13 +39,21 @@ package {
 		
 		public static function setupPhysicsWorld():void {
 			var worldBounds:b2AABB = new b2AABB();
-			worldBounds.lowerBound.Set(-5000 / RATIO, -50000 / RATIO);
-			worldBounds.upperBound.Set(100000 / RATIO, 50000 / RATIO);
+			worldBounds.lowerBound.Set(-1000 / RATIO, -10000 / RATIO);
+			worldBounds.upperBound.Set(150000 / RATIO, 50000 / RATIO);
 			
 			var allowSleep:Boolean = true;
 			
 			world = new b2World(worldBounds, gravity, allowSleep);
 			world.SetContactListener(new MyContactListener());
+		}
+		
+		public static function pause():void {
+			fps = Infinity;
+		}
+		
+		public static function unpause():void {
+			fps = 20;
 		}
 		
 		public static function isStopped():Boolean {

@@ -1,5 +1,6 @@
 package {
 	import Box2D.Common.Math.b2Vec2;
+	import flash.display.MovieClip;
 	import flash.geom.Point;
 	
 	/**
@@ -17,6 +18,7 @@ package {
 		public static const HIGH:int = 150;
 		
 		private var center:Point;
+		private var costume:TerrainCostume;
 		
 		public function DynamicTerrain(x:Number, y:Number, next:Number = 0, maxHeight:int = 100) {
 			super(x, y);
@@ -34,7 +36,11 @@ package {
 				hillStartY -= randomHeight;
 			}
 			shapes = [];
+			var costumeShape:Array = [];
+			costumeShape.push(new Point(xOffset, hillStartY - randomHeight + randomHeight * Math.cos(0)));
 			for (var j:int = 0; j < hillSliceWidth; j++) {
+				costumeShape.push(new Point((j + 1) * pixelStep + xOffset, 
+					hillStartY - randomHeight + randomHeight * Math.cos(2 * Math.PI / hillSliceWidth * (j + 1))));
 				hillSlice = [];
 				hillSlice.push(new Point((j * pixelStep + xOffset), 480 + yOffset));
 				hillSlice.push(new Point((j * pixelStep + xOffset), 
@@ -44,7 +50,17 @@ package {
 				hillSlice.push(new Point(((j + 1) * pixelStep + xOffset), 480 + yOffset));
 				shapes.push(new CustomShape(hillSlice));
 			}
+			costumeShape.push(new Point(j * pixelStep + xOffset, 480 + yOffset));
+			costumeShape.push(new Point(xOffset, 480 + yOffset));
+			costume = new TerrainCostume(costumeShape, location.clone());
 			return hillStartY;
+		}
+		
+		override protected function cleanUpBeforeRemoving():void {
+			super.cleanUpBeforeRemoving();
+			if (costume) {	
+				costume.remove();
+			}
 		}
 		
 		override public function getCenter():Point {

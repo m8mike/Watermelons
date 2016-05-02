@@ -27,6 +27,9 @@ package {
 		}
 		
 		protected function init(myBody:b2Body):void {
+			if (deleted) {
+				return void;
+			}
 			body = myBody;
 			body.SetUserData(this);
 			setAngle(currentAngle);

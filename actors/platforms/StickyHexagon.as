@@ -14,10 +14,6 @@ package {
 			super(x, y, r, r);
 		}
 		
-		public function getBody():b2Body {
-			return body;
-		}
-		
 		override protected function createShapes():void {
 			shape = new HexShape(radius * PhysicalWorld.MIN_SQARE);
 		}
