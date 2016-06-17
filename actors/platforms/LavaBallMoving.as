@@ -1,5 +1,6 @@
 package {
 	import Box2D.Dynamics.b2Body;
+	import flash.display.MovieClip;
 	import flash.geom.Point;
 	
 	/**
@@ -11,6 +12,7 @@ package {
 		private var rotate:Boolean;
 		private var location1:Point;
 		private var radius:Number = 1;
+		private var costume:MovieClip = new MovieClip();
 		
 		public function LavaBallMoving(x:Number, y:Number, loc1:Point, r:Number = 1, rotate:Boolean = false) {
 			radius = r;
@@ -24,6 +26,21 @@ package {
 		override protected function init(myBody:b2Body):void {
 			super.init(myBody);
 			move = new MoveAB(location, location1, body);
+			createCostume();
+		}
+		
+		private function createCostume():void {
+			costume.graphics.beginFill(0xFF0000);
+			costume.graphics.drawCircle(0, 0, radius * 20);
+			costume.graphics.endFill();
+			CameraManager.gameLayer.addChild(costume);
+		}
+		
+		override protected function removeCostumes():void {
+			if (costume.parent) {	
+				costume.parent.removeChild(costume);
+			}
+			super.removeCostumes();
 		}
 		
 		override public function update():void {
@@ -31,6 +48,10 @@ package {
 			if (!rotate) {	
 				body.SetAngularVelocity(0);
 				body.m_sweep.a = 0;
+			}
+			if (costume && body) {	
+				costume.x = body.GetWorldCenter().x * PhysicalWorld.RATIO;
+				costume.y = body.GetWorldCenter().y * PhysicalWorld.RATIO;
 			}
 			super.update();
 		}

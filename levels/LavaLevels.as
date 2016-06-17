@@ -14,13 +14,23 @@ package  {
 			var startPoint:Point = new Point(-20, 10);
 			var terrain:Terrain = new DownHillTerrain(startPoint, 1);
 			startPoint = terrain.finishPoint.clone();
-			for (var i:int = 0; i < 100; i++) {
+			for (var i:int = 0; i < 20; i++) {
+				new Checkpoint(startPoint.x - 3, startPoint.y / 20 - 2);
+				terrain = new PolarRoad(new Point(startPoint.x, startPoint.y / 20 + 10), 
+										int(Math.random()*20+30), int(Math.random()*5 + 1));
+				startPoint = terrain.finishPoint.clone();
 				new Checkpoint(startPoint.x - 3, startPoint.y / 20 - 2);
 				terrain = new RandomStuntIslands(new Point(startPoint.x, startPoint.y / 20 + 10), 1);
 				//new Coin(startPoint.x, startPoint.y / 20 + 10);
 				startPoint = terrain.finishPoint.clone();
 				new Checkpoint(startPoint.x - 3, startPoint.y / 20 - 2);
-				terrain = new RandomSquareIslands(new Point(startPoint.x, startPoint.y / 20 + 10), Math.random()*3);
+				terrain = new JumpSquareIslands(new Point(startPoint.x, startPoint.y / 20 + 10), Math.random()*3);
+				startPoint = terrain.finishPoint.clone();
+				new Checkpoint(startPoint.x - 3, startPoint.y / 20 - 2);
+				terrain = new JumpRockTerrain(new Point(startPoint.x, startPoint.y / 20 + 10));
+				startPoint = terrain.finishPoint.clone();
+				new Checkpoint(startPoint.x - 3, startPoint.y / 20 - 2);
+				terrain = new JumpRockTunnelTerrain(new Point(startPoint.x, startPoint.y / 20 + 10));
 				startPoint = terrain.finishPoint.clone();
 				new Checkpoint(startPoint.x - 3, startPoint.y / 20 - 2);
 				terrain = new RandomSawIslands(new Point(startPoint.x, startPoint.y / 20 + 10), Math.random()*3);

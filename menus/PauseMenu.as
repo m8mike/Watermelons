@@ -7,6 +7,7 @@ package  {
 	 * @author Mad Mike
 	 */
 	public class PauseMenu extends Menu {
+		private var task:Task;
 		
 		public function PauseMenu(layer:DisplayObjectContainer) {
 			super(layer);
@@ -15,6 +16,7 @@ package  {
 			items.push(new MenuItem("Settings", this, null));
 			items.push(new MenuItem("Quit", this, quit));
 			setCurrent(0);
+			task = new Task("whatever");
 		}
 		
 		private function resume(e:Event):void {

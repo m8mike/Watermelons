@@ -15,7 +15,7 @@ package  {
 				new Standard(location.x + 10 + i*10, location.y - 16 + 2*i, 10, 10);
 				addPlatformCostume(location.x + 10 + i*10, location.y - 16 + 2*i, 10, 10);
 				new Spikes(location.x + 10 + i*10, location.y + 10 + 2*i, 10, 2);
-				addPlatformCostume(location.x + 10 + i*10, location.y + 10 + 2*i, 10, 2);
+				addSpikesCostume(location.x + 10 + i*10, location.y + 10 + 2*i, 10, 2);
 			}
 			new Standard(location.x + 10 + i*10, location.y + 2 + 2*i, 10, 10);
 			addPlatformCostume(location.x + 10 + i*10, location.y + 2 + 2*i, 10, 10);

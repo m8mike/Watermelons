@@ -34,7 +34,6 @@ package  {
 			graphics.drawRect(0, 140, 2000, 2000);
 			graphics.endFill();
 			y -= 140;
-			items.push(new MenuItem("Easy 10", this, createLevel10));
 			items.push(new MenuItem("Easy 1", this, createLevel1));
 			items.push(new MenuItem("Easy 2", this, createLevel2));
 			items.push(new MenuItem("Easy 3", this, createLevel3));
@@ -44,6 +43,16 @@ package  {
 			items.push(new MenuItem("Hard 1", this, createLevel7));
 			items.push(new MenuItem("Hard 2", this, createLevel8));
 			items.push(new MenuItem("Hard 3", this, createLevel9));
+			items.push(new MenuItem("Easy 10", this, createLevel10));
+			items.push(new MenuItem("Low Hills", this, createLowHillsLevel));
+			items.push(new MenuItem("Neon", this, createNeonLevel));
+			items.push(new MenuItem("Lava", this, createLavaLevel));
+			items.push(new MenuItem("Downhill", this, createDownHillLevel));
+			items.push(new MenuItem("All Hills", this, createAllHillsLevel));
+			items.push(new MenuItem("Bridge", this, createLaddersLevel));
+			items.push(new MenuItem("Tunnel", this, createTunnelLevel));
+			items.push(new MenuItem("Exploding Platforms", this, null));
+			items.push(new MenuItem("All Platforms", this, createFullRandomLevel));
 			setCurrent(0);
 		}
 		

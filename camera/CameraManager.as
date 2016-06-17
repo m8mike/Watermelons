@@ -9,7 +9,6 @@ package {
 	public class CameraManager {
 		public static var camera:Camera;
 		public static var cameraBackground:Camera;
-		public static var menuLayer:MovieClip;
 		public static var controlsLayer:MovieClip;
 		public static var gameLayer:MovieClip;
 		public static var frontLayer:MovieClip;
@@ -22,6 +21,10 @@ package {
 				return void;
 			}
 			if (Platformer.player) {
+				if (section.x == 0 && section.y == 0) {
+					//предотвращает скачки камеры в момент респавна
+					return void;
+				}
 				freePoint = section;
 			}
 			camera.zoomTo(section, 5*0.3 * zoomRatio);

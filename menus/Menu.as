@@ -64,7 +64,7 @@ package {
 			}
 		}
 		
-		public static function addText(text:String, x:int, y:int, parent:DisplayObjectContainer):void {
+		public static function addText(text:String, x:int, y:int, parent:DisplayObjectContainer, color:uint = 0x000000):void {
 			var textField:TextField = new TextField();
 			textField.x = x;
 			textField.y = y;
@@ -80,7 +80,7 @@ package {
 			textField.defaultTextFormat = textFormat;
 			textField.width = 500;
 			textField.height = 70;
-			textField.textColor = 0x000000;
+			textField.textColor = color;
 			parent.addChild(textField);
 		}
 		

@@ -22,11 +22,9 @@ package  {
 				addPlatformCostume(j * 500 / 20 + 250 / 20 + 2 + location.x, location.y, 210 / 20, 2);
 				if (Math.random() > 0.5) {
 					new JumpBoost(j * 500 / 20 + 5 + location.x, location.y - 5);
-					addPlatformCostume(j * 500 / 20 + 5 + location.x, location.y - 5, 3, 3);
 				}
 				if (Math.random() > 0.5) {
 					new JumpBoost(j * 500 / 20 + 250 / 20 + 5 + location.x, location.y-3);
-					addPlatformCostume(j * 500 / 20 + 250 / 20 + 5 + location.x, location.y-3, 3, 3);
 				}
 			}
 			finishPoint = new Point(location.x + numPatterns * 25, (location.y - 10)*20);

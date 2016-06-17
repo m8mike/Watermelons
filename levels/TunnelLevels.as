@@ -25,7 +25,8 @@ package  {
 						terrain = new LadderTerrain(new Point(startPoint.x, 10+startPoint.y/20), int(Math.random() * 10+1));
 					break;
 					case 2:
-						terrain = new RandomLadderTerrain(new Point(startPoint.x, 10+startPoint.y/20), int(Math.random() * 10+1));
+						//terrain = new RandomLadderTerrain(new Point(startPoint.x, 10+startPoint.y/20), int(Math.random() * 10+1));
+						terrain = new LadderDownTerrain(new Point(startPoint.x, 10+startPoint.y/20), int(Math.random() * 10+1));
 					break;
 					case 3:
 						terrain = new HexagonsTerrain2(new Point(startPoint.x, 10+startPoint.y/20), int(Math.random() * 50+10));

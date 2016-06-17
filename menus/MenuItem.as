@@ -20,15 +20,14 @@ package {
 			menu = parent;
 			itemText = new TextField();
 			itemText.text = text;
-			itemText.x = 20;
-			itemText.y = 100 + 60 * menu.items.length;
+			itemText.x = 20 + 200 * int(menu.items.length/8);
+			itemText.y = 140 + 60 * (menu.items.length % 8);
 			itemText.visible = true;
 			itemText.selectable = false;
 			var mytf:TextFormat = new TextFormat();
 			var font:Font = new SlugfestNF();
 			mytf.font = font.fontName;
 			mytf.size = 40;
-			itemText.y = 140 + 60 * menu.items.length;
 			mytf.align = TextFormatAlign.CENTER;
 			itemText.setTextFormat(mytf);
 			itemText.defaultTextFormat = mytf;

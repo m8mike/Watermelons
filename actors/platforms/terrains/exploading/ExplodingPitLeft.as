@@ -19,7 +19,7 @@ package  {
 			new Standard(location.x, location.y +18, 40, 2);
 			addPlatformCostume(location.x, location.y +18, 40, 2);
 			new Spikes(location.x+10, location.y + 10, 10, 2);
-			addPlatformCostume(location.x+10, location.y + 10, 10, 2);
+			addSpikesCostume(location.x+10, location.y + 10, 10, 2);
 			finishPoint = new Point(location.x + 40, (location.y - 10) * 20 + 18*20);
 		}
 	}

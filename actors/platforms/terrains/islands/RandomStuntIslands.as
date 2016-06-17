@@ -11,7 +11,7 @@ package {
 			new Standard(location.x, location.y, 10, 10);
 			addPlatformCostume(location.x, location.y, 10, 10);
 			new Spikes(location.x + 10, location.y+8, 10, 2);
-			addPlatformCostume(location.x + 10, location.y + 8, 10, 2);
+			addSpikesCostume(location.x + 10, location.y + 8, 10, 2);
 			var offset:Number = 0;
 			for (var i:int = 0; i < numIslands; i++) {
 				var platformLength:Number = 8 + Math.random() * 10;
@@ -20,8 +20,8 @@ package {
 				offset += platformLength;
 				var platformRadius:Number = 6 + Math.random() * 10;
 				new InverseCircle(location.x + 20 + offset, location.y-platformRadius, platformRadius);
-				new LavaBallMoving(location.x+20 + offset+platformRadius*1.2, location.y, 
-									new Point(location.x + 20 + platformRadius * 1.2 + offset, location.y - platformRadius * 2), 
+				new LavaBallMoving(location.x+20 + offset+platformRadius+7/2, location.y, 
+									new Point(location.x+20 + offset+platformRadius+7/2, location.y - platformRadius * 2), 
 									platformRadius/5);
 				offset += platformRadius*2+7;
 				new InverseCircleDown(location.x + 20 + offset, location.y - platformRadius, platformRadius);

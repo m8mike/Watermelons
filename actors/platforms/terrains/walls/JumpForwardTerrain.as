@@ -15,12 +15,10 @@ package  {
 				new Standard(j * 40 + 15 + location.x, location.y - 15, 3, 15);
 				addPlatformCostume(j * 40 + 15 + location.x, location.y - 15, 3, 15);
 				new JumpBoost(j * 40 + 5 + location.x, location.y - 3);
-				addPlatformCostume(j * 40 + 5 + location.x, location.y - 3, 3, 3);
 				new Standard(j * 40 + location.x, location.y - 30, 3, 15);
 				addPlatformCostume(j * 40 + location.x, location.y - 30, 3, 15);
 				var jumpBoost:JumpBoost = new JumpBoost(j * 40 + 6 + location.x, location.y - 20);
 				jumpBoost.setAngle(90);
-				addPlatformCostume(j * 40 + 6 + location.x, location.y - 20, 3, 3, 90);
 			}
 			finishPoint = new Point(location.x + numPatterns * 40, (location.y - 10) * 20);
 		}

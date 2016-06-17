@@ -16,12 +16,14 @@ package  {
 			graphics.drawRect(0, 140, 2000, 2000);
 			graphics.endFill();
 			y -= 140;
+			items.push(new MenuItem("", this, null));
+			items.push(new MenuItem("", this, null));
 			items.push(new MenuItem("Story Mode", this, openStory));
-			items.push(new MenuItem("Duel", this, null));
-			items.push(new MenuItem("Challenge", this, openChallenge));
-			items.push(new MenuItem("Tournament", this, null));
+			//items.push(new MenuItem("Duel", this, null));
+			//items.push(new MenuItem("Challenge", this, openChallenge));
+			//items.push(new MenuItem("Tournament", this, null));
 			items.push(new MenuItem("Random Map", this, createRandomMap));
-			items.push(new MenuItem("Achievements", this, null));
+			//items.push(new MenuItem("Achievements", this, null));
 			items.push(new MenuItem("Settings", this, null));
 			items.push(new MenuItem("Credits", this, null));
 			setCurrent(0);

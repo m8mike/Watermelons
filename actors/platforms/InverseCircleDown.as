@@ -26,8 +26,8 @@ package {
 			var center:Point = new Point(location.x, location.y - radius);
 			var angle:Number = Math.PI;
 			var hillSlice:Array;
-			costume.graphics.beginFill(0x008000);
-			costume.graphics.moveTo(Math.cos(angle) * radius - 100, Math.sin(angle) * radius);
+			var costumeShape:Array = [];
+			costumeShape.push(new Point(Math.cos(angle) * radius - 100, Math.sin(angle) * radius));
 			hillSlice = [];
 			hillSlice.push(new Point(Math.cos(angle) * radius-100, (Math.sin(angle) * radius + 220)));
 			hillSlice.push(new Point(Math.cos(angle) * radius-100, (Math.sin(angle) * radius)));
@@ -38,18 +38,20 @@ package {
 				hillSlice = [];
 				hillSlice.push(new Point(Math.cos(angle) * radius, (Math.sin(angle) * radius + 220)));
 				hillSlice.push(new Point(Math.cos(angle) * radius, (Math.sin(angle) * radius)));
-				costume.graphics.lineTo(Math.cos(angle) * radius, Math.sin(angle) * radius);
+				costumeShape.push(new Point(Math.cos(angle) * radius, Math.sin(angle) * radius));
 				angle -= Math.PI / 15 / 2;
 				hillSlice.push(new Point(Math.cos(angle) * radius, (Math.sin(angle) * radius)));
 				hillSlice.push(new Point(Math.cos(angle) * radius, (Math.sin(angle) * radius + 220)));
-				costume.graphics.lineTo(Math.cos(angle) * radius, Math.sin(angle) * radius);
+				costumeShape.push(new Point(Math.cos(angle) * radius, Math.sin(angle) * radius));
 				shapes.push(new CustomShape(hillSlice));
 			}
-			costume.graphics.lineTo(Math.cos(angle) * radius, Math.sin(Math.PI) * radius + 420);
-			costume.graphics.lineTo(Math.cos(Math.PI) * radius-100, Math.sin(Math.PI) * radius + 420);
-			costume.graphics.endFill();
-			costume.x = location.x;
-			costume.y = location.y;
+			costumeShape.push(new Point(Math.cos(angle) * radius, Math.sin(Math.PI) * radius + 420));
+			costumeShape.push(new Point(Math.cos(Math.PI) * radius-100, Math.sin(Math.PI) * radius + 420));
+			addCostumeFromShape(location.x, location.y, costumeShape);
+		}
+		
+		private function addCostumeFromShape(x:Number, y:Number, shape:Array):void {
+			costume.addChild(InverseCircle.getCostumeFromShape(x, y, shape));
 		}
 		
 		override protected function createBodies():void {

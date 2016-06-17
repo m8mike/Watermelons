@@ -15,7 +15,6 @@ package  {
 				new Standard(j * 40 + 15 + location.x, location.y - 15, 3, 15);
 				addPlatformCostume(j * 40 + 15 + location.x, location.y - 15, 3, 15);
 				new JumpBoost(j * 40 + 5 + location.x, location.y - 3);
-				addPlatformCostume(j * 40 + 5 + location.x, location.y - 3, 3, 3);
 			}
 			finishPoint = new Point(location.x + numPatterns * 40, (location.y - 10)*20);
 		}

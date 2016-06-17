@@ -30,9 +30,9 @@ package  {
 					addTree(new Point(shape[i].x, shape[i].y-15), Math.atan2(shape[i+1].y - shape[i-1].y, shape[i+1].x - shape[i-1].x));
 				}
 			}
-			makeCircles(shape, true);
+			/*makeCircles(shape, true);
 			makeCircles(shape);
-			makeCircles(shape);
+			makeCircles(shape);*/
 			costume.graphics.beginFill(0xB0FF3C);
 			costume.graphics.moveTo(shape[0].x, shape[0].y-20);
 			for (i = 1; i < shape.length-2; i++) {
